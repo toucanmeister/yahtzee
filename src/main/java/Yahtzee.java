@@ -1,40 +1,35 @@
+
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Yahtzee {
 
     private int numAllDice;
+    private int numRemainingThrows;
     private List<Integer> outDice;
 
     Yahtzee() {
-        this.numAllDice = 5;
+        this.setNumAllDice(5);  // Defaults, can be changed by using Optional Parameters
+        this.setNumRemainingThrows(3);
     }
 
+    // Called from main, carries out analysis
     public void analyze() {
+        printBasicInfo();
+
+    }
+
+
+    private void printBasicInfo() {
         System.out.println(
-                "Number of Dice: " + numAllDice + "\n" +
-                "Dice that are out: ");
+                        "Number of Dice: " + numAllDice + "\n" +
+                        "Remaining Throws: " + numRemainingThrows + "\n" +
+                        "Dice that are out: ");
         for (Integer die: outDice) {
             System.out.print(die + " ");
         }
-
         System.out.println("\n");
-    }
-
-    // Getters and Setters
-
-    public int getNumAllDice() {
-        return numAllDice;
-    }
-
-    public void setNumAllDice(int numAllDice) {
-        this.numAllDice = numAllDice;
-    }
-
-    public List<Integer> getOutDice() {
-        return outDice;
-    }
-
-    public void setOutDice(List<Integer> outDice) {
-        this.outDice = outDice;
     }
 }
