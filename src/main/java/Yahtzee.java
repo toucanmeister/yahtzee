@@ -8,7 +8,7 @@ public class Yahtzee {
 
     private int numAllDice;
     private int numRemainingThrows;
-    private List<Integer> outDice;
+    private int[] outDice;
 
     Yahtzee() {
         this.setNumAllDice(5);  // Defaults, can be changed by using Optional Parameters
@@ -21,13 +21,17 @@ public class Yahtzee {
 
     }
 
+    private void numbersAnalysis() {
+        NumberAnalysis numberAnalysis = new NumberAnalysis(numAllDice, numRemainingThrows, outDice);
+    }
+
 
     private void printBasicInfo() {
         System.out.println(
                         "Number of Dice: " + numAllDice + "\n" +
                         "Remaining Throws: " + numRemainingThrows + "\n" +
                         "Dice that are out: ");
-        for (Integer die: outDice) {
+        for (int die: outDice) {
             System.out.print(die + " ");
         }
         System.out.println("\n");

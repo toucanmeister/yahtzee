@@ -1,14 +1,10 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Start {
-    public Yahtzee yahtzee;
 
     Start(String[] args) {
         Yahtzee yahtzee = new Yahtzee();
-        List<Integer> outDice = evaluateOptions(args, yahtzee); // Setup yahtzee with options in args, return list of all other arguments (which are the out-of-game dice values)
+        int[] outDice = evaluateOptions(args, yahtzee); // Setup yahtzee with options in args, return list of all other arguments (which are the out-of-game dice values)
         yahtzee.setOutDice(outDice);
         yahtzee.analyze();
     }
@@ -17,7 +13,7 @@ public class Start {
         new Start(args);
     }
 
-    public List<Integer> evaluateOptions(String[] args, Yahtzee yahtzee) {
+    public int[] evaluateOptions(String[] args, Yahtzee yahtzee) {
         int endOfOptions = 0;
 
         for (int i = 0; i < args.length; i++) {
@@ -46,12 +42,12 @@ public class Start {
         }
 
         checkForOutOfBounds(args.length, endOfOptions, yahtzee); // Check if too many out-of-game-dice have been specified
-        List<Integer> outDice = cutArrayToListOfDiceValues(args, endOfOptions);
+        int[] outDice = cutArrayToListOfDiceValues(args, endOfOptions);
         checkForInvalidDice(outDice);
         return outDice;
     }
 
-    public static void checkForInvalidDice(List<Integer> dice) {
+    public static void checkForInvalidDice(int[] dice) {
         for (Integer die: dice) {
             if (die < 1 || die > 6) {
                 System.err.println("Invalid argument for out-of-game die: " + die);
@@ -66,13 +62,13 @@ public class Start {
             System.exit(1);
         }
     }
-    public static List<Integer> cutArrayToListOfDiceValues(String[] args, int startOfDice) {
+    public static int[] cutArrayToListOfDiceValues(String[] args, int startOfDice) {
         String[] diceStrings = Arrays.copyOfRange(args, startOfDice, args.length);
-        List<Integer> outDice = new ArrayList<>();
+        int[] outDice = new int[0];
         try {
             outDice = Arrays.stream(diceStrings)
-                    .map(Integer::parseUnsignedInt)
-                    .collect(Collectors.toList());
+                    .mapToInt(Integer::parseUnsignedInt)
+                    .toArray();
         } catch(Exception e) {
             System.err.println("Non-numerical value for out-of-game die.");
             System.exit(1);
