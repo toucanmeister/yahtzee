@@ -25,6 +25,7 @@ public class Start {
                     System.exit(1);
                 }
                 i++; // skip the argument specifying the number of dice
+                endOfOptions = i+1;
                 continue; // dont check for other matches in this argument
             }
             if (args[i].equals("-r")) { // OPTION: Number of remaining throws, default is 3
@@ -35,9 +36,10 @@ public class Start {
                     System.exit(1);
                 }
                 i++;
+                endOfOptions = i+1;
                 continue;
             }
-            endOfOptions = i; // At this point, i is where the Numbers for the dice that are out the game start
+            // At this point, endOfOptions is the index where the Numbers for the dice that are out the game start
             break;
         }
 
