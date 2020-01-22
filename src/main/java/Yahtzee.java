@@ -1,7 +1,9 @@
 
 import lombok.Data;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class Yahtzee {
@@ -22,7 +24,7 @@ public class Yahtzee {
     }
 
     private void doNumbersAnalysis() {
-        NumberAnalysis numberAnalysis = new NumberAnalysis(numAllDice, numRemainingThrows, outDice);
+        NumberAnalysis numberAnalysis = new NumberAnalysis(1, numAllDice, numRemainingThrows, Arrays.stream(outDice).boxed().collect(Collectors.toList()));
         numberAnalysis.doAnalysis();
     }
 
