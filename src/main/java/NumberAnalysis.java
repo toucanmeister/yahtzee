@@ -11,7 +11,7 @@ public class NumberAnalysis {
     private List<Integer> outDice;
     private List<Integer> outDiceInitial;
     private List<Integer> numOfHitsEachRound;
-    private int numIterations = 1000;
+    private int numIterations = 10000;
     private int targetNum;
 
 
@@ -24,9 +24,9 @@ public class NumberAnalysis {
 
     public void doAnalysis() {
         numOfHitsEachRound = new ArrayList<>();
-        for (int i = 0; i < numIterations; i++) {
-            outDice = new ArrayList<>(outDiceInitial);
-            for (int roll = 0; roll < numRemainingThrows; roll ++) {
+        for (int i = 0; i < numIterations; i++) { // Going through the iterations
+            outDice = new ArrayList<>(outDiceInitial); // For saving the dice that have been taken out-of-game in this iteration
+            for (int roll = 0; roll < numRemainingThrows; roll ++) { // Going through the rolls in each iteration
                 int[] thrownDice = rollDice();
                 for (int die : thrownDice) {
                     if (die == targetNum) {
@@ -34,7 +34,7 @@ public class NumberAnalysis {
                     }
                 }
             }
-            numOfHitsEachRound.add(outDice.size());
+            numOfHitsEachRound.add(outDice.size()); // Save data of this iteration
         }
         printResults();
     }
@@ -52,7 +52,13 @@ public class NumberAnalysis {
             int finalNumHits = numHits;
             hitlist[numHits] = numOfHitsEachRound.stream()
                     .filter(x->x == finalNumHits).count();
-            System.out.println("Iterations with " + numHits + " Hits: " + hitlist[numHits]);
+        }
+
+        double maximum = Arrays.stream(hitlist).max().orElse(1);
+        for (int numHits = 0; numHits < hitlist.length; numHits++) {
+            System.out.print(numHits + "  ");
+            int numOfCharsToPrint = (int) ( (double) hitlist[numHits] / (numIterations / 100));
+            System.out.printf("%-50s | %s \n", "#".repeat(numOfCharsToPrint), ((double) hitlist[numHits]) / ((double) numIterations) * 100);
         }
     }
 

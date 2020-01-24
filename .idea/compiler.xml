@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="yahtzee" target="10" />
+      <module name="yahtzee" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
