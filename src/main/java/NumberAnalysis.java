@@ -41,15 +41,18 @@ public class NumberAnalysis {
 
     private void printResults() {
         System.out.println();
-        System.out.println("Average: " + numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum() / numIterations);
+        System.out.println("Average: " + ((double) numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum()) / ((double) numIterations));
         System.out.println("In " + numIterations + " Rounds");
+        printDiagram();
+    }
 
-        long[] histlist = new long[(numAllDice - outDiceInitial.size()) + 1];
-        for (int numHits = 0; numHits < histlist.length; numHits++) {
+    private void printDiagram() {
+        long[] hitlist = new long[numAllDice+1];
+        for (int numHits = 0; numHits < hitlist.length; numHits++) {
             int finalNumHits = numHits;
-            histlist[numHits] = numOfHitsEachRound.stream()
+            hitlist[numHits] = numOfHitsEachRound.stream()
                     .filter(x->x == finalNumHits).count();
-            System.out.println("Iterations with " + numHits + " Hits: " + histlist[numHits]);
+            System.out.println("Iterations with " + numHits + " Hits: " + hitlist[numHits]);
         }
     }
 

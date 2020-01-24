@@ -24,7 +24,7 @@ public class Yahtzee {
     }
 
     private void doNumbersAnalysis() {
-        NumberAnalysis numberAnalysis = new NumberAnalysis(1, numAllDice, numRemainingThrows, Arrays.stream(outDice).boxed().collect(Collectors.toList()));
+        NumberAnalysis numberAnalysis = new NumberAnalysis(2, numAllDice, numRemainingThrows, Arrays.stream(outDice).boxed().collect(Collectors.toList()));
         numberAnalysis.doAnalysis();
     }
 
