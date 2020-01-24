@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -9,7 +10,8 @@ public class NumberAnalysis {
     private int numRemainingThrows;
     private List<Integer> outDice;
     private List<Integer> outDiceInitial;
-    private int numIterations = 100;
+    private List<Integer> numOfHitsEachRound;
+    private int numIterations = 1000;
     private int targetNum;
 
 
@@ -21,7 +23,7 @@ public class NumberAnalysis {
     }
 
     public void doAnalysis() {
-        List<Integer> numOfHitsEachRound = new ArrayList<>();
+        numOfHitsEachRound = new ArrayList<>();
         for (int i = 0; i < numIterations; i++) {
             outDice = new ArrayList<>(outDiceInitial);
             for (int roll = 0; roll < numRemainingThrows; roll ++) {
@@ -34,9 +36,21 @@ public class NumberAnalysis {
             }
             numOfHitsEachRound.add(outDice.size());
         }
+        printResults();
+    }
+
+    private void printResults() {
         System.out.println();
         System.out.println("Average: " + numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum() / numIterations);
         System.out.println("In " + numIterations + " Rounds");
+
+        long[] histlist = new long[(numAllDice - outDiceInitial.size()) + 1];
+        for (int numHits = 0; numHits < histlist.length; numHits++) {
+            int finalNumHits = numHits;
+            histlist[numHits] = numOfHitsEachRound.stream()
+                    .filter(x->x == finalNumHits).count();
+            System.out.println("Iterations with " + numHits + " Hits: " + histlist[numHits]);
+        }
     }
 
     private int[] rollDice() {
