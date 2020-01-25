@@ -1,5 +1,10 @@
 import java.util.Arrays;
 
+/**
+ * This class contains main,
+ * evaluates the command-line arguments
+ * and performs input validation
+ */
 public class Start {
 
     Start(String[] args) {

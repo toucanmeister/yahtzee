@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class connects the input-managing Start class
+ * with the simulation-doing classes. It calls all the
+ * simulation-doing classes with the input from Start.
+ */
 @Data
 public class Yahtzee {
 
