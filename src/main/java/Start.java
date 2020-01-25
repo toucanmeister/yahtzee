@@ -26,7 +26,7 @@ public class Start {
                 try {
                     yahtzee.setNumAllDice(Integer.parseUnsignedInt(args[i + 1]));
                 } catch (Exception e) {
-                    System.err.println("Invalid / No argument for number of dice.\n");
+                    System.err.println("Invalid / No argument for number of dice.");
                     System.exit(1);
                 }
                 i++; // skip the argument specifying the number of dice
@@ -37,7 +37,19 @@ public class Start {
                 try {
                     yahtzee.setNumRemainingThrows(Integer.parseUnsignedInt(args[i + 1]));
                 } catch (Exception e) {
-                    System.err.println("Invalid / No argument for number of remaining throws.\n");
+                    System.err.println("Invalid / No argument for number of remaining throws.");
+                    System.exit(1);
+                }
+                i++;
+                endOfOptions = i+1;
+                continue;
+            }
+
+            if (args[i].equals("-t")) { // OPTION: Specifies the number to be analyzed in NumberAnalysis
+                try {
+                    yahtzee.setTargetNum(Integer.parseUnsignedInt(args[i + 1]));
+                } catch (Exception e) {
+                    System.err.println("Invalid / No argument for number to be analysed.");
                     System.exit(1);
                 }
                 i++;

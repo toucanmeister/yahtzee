@@ -39,13 +39,15 @@ public class NumberAnalysis {
                     }
                 }
             }
-            numOfHitsEachRound.add(outDice.size()); // Save data of this iteration
+            numOfHitsEachRound.add((int) outDice.stream()
+                    .filter(x -> x == targetNum).count() ); // Save data of this iteration
+
         }
         printResults();
     }
 
     private void printResults() {
-        System.out.println();
+        System.out.println("Analysis for target number: " + targetNum);
         System.out.println("Average: " + ((double) numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum()) / ((double) numIterations));
         System.out.println("In " + numIterations + " Rounds");
         printDiagram();
@@ -63,6 +65,7 @@ public class NumberAnalysis {
             int numOfCharsToPrint = (int) ( (double) hitlist[numHits] / (numIterations / 100));
             System.out.printf("%-50s | %.2f%s \n", "#".repeat(numOfCharsToPrint), ((double) hitlist[numHits]) / ((double) numIterations) * 100, "%");
         }
+        System.out.println();
     }
 
     private int[] rollDice() {
