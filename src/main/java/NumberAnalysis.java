@@ -13,39 +13,25 @@ public class NumberAnalysis extends Analysis {
 
     private int targetNum;
 
-
     NumberAnalysis(int targetNum, int numAllDice, int numRemainingThrows, List<Integer> outDice) {
         this.targetNum = targetNum;
         this.numAllDice = numAllDice;
         this.numRemainingThrows = numRemainingThrows;
         this.outDiceInitial = outDice;
+        this.numIterations = 10000;
     }
 
     @Override
-    public void doAnalysis() {
-        numOfHitsEachRound = new ArrayList<>();
-        for (int i = 0; i < numIterations; i++) { // Going through the iterations
-            outDice = new ArrayList<>(outDiceInitial); // For saving the dice that have been taken out-of-game in this iteration
-            for (int roll = 0; roll < numRemainingThrows; roll ++) { // Going through the rolls in each iteration
-                int[] thrownDice = rollDice();
-                for (int die : thrownDice) {
-                    if (die == targetNum) {
-                        outDice.add(die);
-                    }
-                }
-            }
-            numOfHitsEachRound.add((int) outDice.stream()
-                    .filter(x -> x == targetNum).count() ); // Save data of this iteration
-        }
-        printResults();
-    }
-
-    @Override
-    void printResults() {
+    public void printResults() {
         System.out.println("Analysis for target number: " + targetNum);
         System.out.println("Average: " + ((double) numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum()) / ((double) numIterations));
         System.out.println("In " + numIterations + " Rounds");
         printDiagram();
+    }
+
+    @Override
+    boolean dieShouldBeKept(int die) {
+        return die == targetNum;
     }
 
     private void printDiagram() {

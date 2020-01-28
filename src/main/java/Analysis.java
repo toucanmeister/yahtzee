@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -7,7 +8,24 @@ public abstract class Analysis {
     List<Integer> outDice;
     List<Integer> outDiceInitial;
     List<Integer> numOfHitsEachRound;
-    int numIterations = 10000;
+    int numIterations;
+
+    public void doAnalysis() {
+        numOfHitsEachRound = new ArrayList<>();
+        for (int i = 0; i < numIterations; i++) { // Going through the iterations
+            outDice = new ArrayList<>(outDiceInitial); // For saving the dice that have been taken out-of-game in this iteration
+            for (int roll = 0; roll < numRemainingThrows; roll ++) { // Going through the rolls in each iteration
+                int[] thrownDice = rollDice();
+                for (int die : thrownDice) {
+                    if (dieShouldBeKept(die)) {
+                        outDice.add(die);
+                    }
+                }
+            }
+            numOfHitsEachRound.add((int) outDice.stream()
+                    .filter(this::dieShouldBeKept).count() ); // Save data of this iteration
+        }
+    }
 
     int[] rollDice() {
         int[] dice = new int[numAllDice - outDice.size()];
@@ -17,6 +35,6 @@ public abstract class Analysis {
         return dice;
     }
 
-    abstract public void doAnalysis();
-    abstract void printResults();
+    abstract public void printResults();
+    abstract boolean dieShouldBeKept(int die);
 }

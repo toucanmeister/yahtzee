@@ -27,18 +27,21 @@ public class Yahtzee {
     // Called from main, carries out analysis
     public void analyze() {
         printBasicInfo();
-        doNumbersAnalysis();
+        doNumbersAnalysisAndPrintResults();
+
     }
 
-    private void doNumbersAnalysis() {
+    private void doNumbersAnalysisAndPrintResults() {
         if (targetNum == -1) { // If the targetNum wasn't specified, do analysis for 1 through 6
             for(targetNum = 1; targetNum <= 6; targetNum++) {
                 NumberAnalysis numberAnalysis = new NumberAnalysis(targetNum, numAllDice, numRemainingThrows, Arrays.stream(outDice).boxed().collect(Collectors.toList()));
                 numberAnalysis.doAnalysis();
+                numberAnalysis.printResults();
             }
         } else { // If the targetNum was specified, only do analysis for that number
             NumberAnalysis numberAnalysis = new NumberAnalysis(targetNum, numAllDice, numRemainingThrows, Arrays.stream(outDice).boxed().collect(Collectors.toList()));
             numberAnalysis.doAnalysis();
+            numberAnalysis.printResults();
         }
 
     }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class StraightAnalysis extends Analysis {
@@ -6,15 +7,16 @@ public class StraightAnalysis extends Analysis {
         this.numAllDice = numAllDice;
         this.numRemainingThrows = numRemainingThrows;
         this.outDiceInitial = outDice;
+        this.numIterations = 10000;
     }
 
     @Override
-    public void doAnalysis() {
+    public void printResults() {
 
     }
 
     @Override
-    void printResults() {
-
+    boolean dieShouldBeKept(int die) {
+        return true;
     }
 }
