@@ -9,14 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * the upper part of a Yahtzee scoreboard.
  * It also prints the results of it's simulations as a diagram.
  */
-public class NumberAnalysis {
+public class NumberAnalysis extends Analysis {
 
-    private int numAllDice;
-    private int numRemainingThrows;
-    private List<Integer> outDice;
-    private List<Integer> outDiceInitial;
-    private List<Integer> numOfHitsEachRound;
-    private int numIterations = 10000;
     private int targetNum;
 
 
@@ -27,6 +21,7 @@ public class NumberAnalysis {
         this.outDiceInitial = outDice;
     }
 
+    @Override
     public void doAnalysis() {
         numOfHitsEachRound = new ArrayList<>();
         for (int i = 0; i < numIterations; i++) { // Going through the iterations
@@ -41,12 +36,12 @@ public class NumberAnalysis {
             }
             numOfHitsEachRound.add((int) outDice.stream()
                     .filter(x -> x == targetNum).count() ); // Save data of this iteration
-
         }
         printResults();
     }
 
-    private void printResults() {
+    @Override
+    void printResults() {
         System.out.println("Analysis for target number: " + targetNum);
         System.out.println("Average: " + ((double) numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum()) / ((double) numIterations));
         System.out.println("In " + numIterations + " Rounds");
@@ -55,7 +50,7 @@ public class NumberAnalysis {
 
     private void printDiagram() {
         long[] hitlist = new long[numAllDice+1];
-        for (int numHits = 0; numHits < hitlist.length; numHits++) { // This loop fills hitlist[]
+        for (int numHits = 0; numHits < hitlist.length; numHits++) { // This loop fills hitlist[] (which is then used for printing the histogram)
             int finalNumHits = numHits;
             hitlist[numHits] = numOfHitsEachRound.stream()
                     .filter(x->x == finalNumHits).count();
@@ -66,13 +61,5 @@ public class NumberAnalysis {
             System.out.printf("%-50s | %.2f%s \n", "#".repeat(numOfCharsToPrint), ((double) hitlist[numHits]) / ((double) numIterations) * 100, "%");
         }
         System.out.println();
-    }
-
-    private int[] rollDice() {
-        int[] dice = new int[numAllDice - outDice.size()];
-        for (int i=0; i < dice.length; i++) {
-            dice[i] = ThreadLocalRandom.current().nextInt(1,7);
-        }
-        return dice;
     }
 }
