@@ -24,7 +24,13 @@ public class NumberAnalysis extends Analysis {
     @Override
     public void printResults() {
         System.out.println("Analysis for target number: " + targetNum);
-        System.out.println("Average: " + ((double) numOfHitsEachRound.stream().mapToInt(Integer::intValue).sum()) / ((double) numIterations));
+
+        double numOfHitsTotal = dataEachRound.stream()
+                .mapToInt(list-> (int) list.stream()
+                        .filter(x->x==targetNum)
+                        .count())
+                .sum();
+        System.out.println("Average: " + numOfHitsTotal / (double) numIterations);
         System.out.println("In " + numIterations + " Rounds");
         printDiagram();
     }
@@ -38,7 +44,10 @@ public class NumberAnalysis extends Analysis {
         long[] hitlist = new long[numAllDice+1];
         for (int numHits = 0; numHits < hitlist.length; numHits++) { // This loop fills hitlist[] (which is then used for printing the histogram)
             int finalNumHits = numHits;
-            hitlist[numHits] = numOfHitsEachRound.stream()
+            hitlist[numHits] = dataEachRound.stream()
+                    .mapToInt(list -> (int) list.stream()
+                            .filter(x->x==targetNum)
+                            .count())
                     .filter(x->x == finalNumHits).count();
         }
         for (int numHits = 0; numHits < hitlist.length; numHits++) { // This loop actually prints the diagram

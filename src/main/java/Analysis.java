@@ -7,11 +7,11 @@ public abstract class Analysis {
     int numRemainingThrows;
     List<Integer> outDice;
     List<Integer> outDiceInitial;
-    List<Integer> numOfHitsEachRound;
+    List<List<Integer>> dataEachRound;
     int numIterations;
 
     public void doAnalysis() {
-        numOfHitsEachRound = new ArrayList<>();
+        dataEachRound = new ArrayList<>();
         for (int i = 0; i < numIterations; i++) { // Going through the iterations
             outDice = new ArrayList<>(outDiceInitial); // For saving the dice that have been taken out-of-game in this iteration
             for (int roll = 0; roll < numRemainingThrows; roll ++) { // Going through the rolls in each iteration
@@ -22,8 +22,7 @@ public abstract class Analysis {
                     }
                 }
             }
-            numOfHitsEachRound.add((int) outDice.stream()
-                    .filter(this::dieShouldBeKept).count() ); // Save data of this iteration
+            dataEachRound.add(outDice); // Save data of this iteration
         }
     }
 

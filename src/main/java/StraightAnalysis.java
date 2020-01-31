@@ -12,11 +12,16 @@ public class StraightAnalysis extends Analysis {
 
     @Override
     public void printResults() {
-
+        System.out.println("Analysis for Straights");
+        System.out.println("In " + numIterations + " Rounds");
     }
 
     @Override
     boolean dieShouldBeKept(int die) {
-        return true;
+        if (outDice.contains(die)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
